@@ -1,4 +1,9 @@
 function [watermarked] = spread_spectrum(img, watermark, alpha)
+% SPREAD_SPECTRUM Multiplicative Spread Spectrum watermarking.
+%
+%  watermarked = SPREAD_SPECTRUM(img, watermark, alpha)
+%      Applies a 1000-len vector of pseudorandom bits `watermark` to the
+%      image `img`, of at least 1000 pixels, with intensity `alpha`.
 
 timg = reshape(dct2(img), 1, []);
 stimg = sign(timg);
