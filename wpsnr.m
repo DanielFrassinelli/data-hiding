@@ -11,8 +11,13 @@ function f = WPSNR(A,B,varargin)
 % Written by Ruizhen Liu, http://www.assuredigit.com
 
 	if A == B
-   	error('Images are identical: PSNR has infinite value')
-	end
+        fprintf('Images are identical: PSNR has infinite value\n');
+        f = 100000;
+        return;
+    end
+    
+    A=mat2gray(A,[0 255]);
+    B=mat2gray(B,[0 255]);
 
 	max2_A = max(max(A));
 	max2_B = max(max(B));
