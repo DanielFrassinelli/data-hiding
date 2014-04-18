@@ -12,7 +12,7 @@ function f = WPSNR(A,B,varargin)
 
 	if A == B
         fprintf('Images are identical: PSNR has infinite value\n');
-        f = 100000;
+        f = inf;
         return;
     end
     
