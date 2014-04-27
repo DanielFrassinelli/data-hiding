@@ -50,9 +50,9 @@ threshold = 5.0; % now is dynamic --> we will fix it during the competition
 
 %% --------- Preprocessing-------- %
 
-original = imread(imgfile);         % original image
-marked =   imread(attimg);            % filtered image
-marked_original  = imread(watfile); % watermarked image
+%original = imread(imgfile);         % original image
+%marked =   imread(attimg);            % filtered image
+%marked_original  = imread(watfile); % watermarked image
 
 mydata.param     = 0; % embedding param
 mydata.row       = 0; % row of the used freq
@@ -71,9 +71,9 @@ dct.original =  zeros(dct_list_size ,block_size,block_size);
 dct.marked   =  zeros(dct_list_size ,block_size,block_size);
 dct.filtered =  zeros(dct_list_size ,block_size,block_size); % mark + filters
 
-%original = imgfile;         % original image
-%marked =   attimg;            % filtered image
-%marked_original  = watfile; % watermarked image
+original = imgfile;         % original image
+marked =   attimg;            % filtered image
+marked_original  = watfile; % watermarked image
 
 rng(our_seed);   % init prng
 mark = round(rand(32,32));
@@ -83,6 +83,10 @@ mark = transformMark(mark);
 original_dct                = blkproc(double(original),         [block_size block_size], 'dct2');
 marked_dct                  = blkproc(double(marked),           [block_size block_size], 'dct2');
 marked_original_dct         = blkproc(double(marked_original),  [block_size block_size], 'dct2');
+
+%original_dct_list        =  zeros(dct_list_size ,block_size,block_size);
+%marked_dct_list          =  zeros(dct_list_size ,block_size,block_size);
+%marked_original_dct_list =  zeros(dct_list_size ,block_size,block_size);
 
 k = 1; % from block DCT to list DCT
 for i = 1:block_size:imsize
@@ -98,12 +102,11 @@ end
 
 corr_avg = zeros(1 , similar_size);
 
-for i = 1:dct_list_size % calcolo tutti i valori dipendenti dal blocco  
+for i = 1:dct_list_size % calcolo tutti i valori dipendenti dal blocco 
     % embedding / detection --> prendo i blocchi piu simili --> prendo la
     % frequenza che varia di meno tra i blocchi --> embeddo il wmark la con
     % un parametro proporzionale alla media/norma e inversamente
-    % proporzionale all'importanza della frequenza nel blocco (ancora da
-    % fare)
+    % proporzionale all'importanza della frequenza nel blocco
     temp = reshape(dct.original(i,:,:), 1 , block_size*block_size);
     [~ , ind] = sort(abs(temp) , 'descend');
     r = mod(ind(2) - 1,16) + 1;

@@ -23,7 +23,7 @@ dct_list_size = imsize*imsize/(block_size * block_size); % number of blocks
 
 %% --------- Preprocessing -------- %
 
-image = imread(image);
+%image = imread(image);
 
 rng(our_seed);   % init prng
 mark = round(rand(32,32));
@@ -100,6 +100,7 @@ function mark = transformMark(mark) %still testing
         if (mark(j) == 0)
             mark(j) = -1;
         end
+        %{
         if (mod(j,2) == 0)
             mark(j) = mark(j) * p;
             if (p >= 2.0)
@@ -107,5 +108,6 @@ function mark = transformMark(mark) %still testing
             end
             p = p + 0.2;
         end
+        %}
     end
 end
