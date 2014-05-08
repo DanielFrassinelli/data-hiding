@@ -1,4 +1,4 @@
-function [similarity] = ssp_similarity(wimg, img, wat, alpha)
+function [similarity , b] = ssp_similarity(wimg, img, wat, alpha)
 %  SSP_SIMILARITY
 %    Watermark extraction and similarity measure for multiplicative spread
 %    spectrum.
@@ -17,5 +17,7 @@ extwat = (w - v) / alpha ./ v;
 % ensure that similarity with the very same watermarked image is infinity
 similarity = inf;
 similarity(any(extwat)) = extwat * wat.' / norm(extwat);
+
+b = wpsnr(wimg , img);
 
 end

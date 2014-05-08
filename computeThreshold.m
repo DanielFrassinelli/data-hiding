@@ -19,20 +19,10 @@ threshold = ss(1) + ss(1)/10.0;
 end
 
 function mark = transformMark(mark) % test
-    p = 1.0;
     for j = 1:size(mark,2) 
         if (mark(j) == 0)
             mark(j) = -1;
         end
-        %{
-        if (mod(j,2) == 0)
-            mark(j) = mark(j) * p;
-            if (p >= 2.0)
-                p = 1.0;
-            end
-            p = p + 0.2;
-        end
-        %}
     end
 end
 

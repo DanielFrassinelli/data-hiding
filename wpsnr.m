@@ -9,15 +9,10 @@ function f = WPSNR(A,B,varargin)
 % Using: 	WPSNR(A,B)
 %
 % Written by Ruizhen Liu, http://www.assuredigit.com
+A=mat2gray(A,[0 255]);
+B=mat2gray(B,[0 255]);
 
-	if A == B
-        fprintf('Images are identical: PSNR has infinite value\n');
-        f = inf;
-        return;
-    end
-    
-    A=mat2gray(A,[0 255]);
-    B=mat2gray(B,[0 255]);
+	
 
 	max2_A = max(max(A));
 	max2_B = max(max(B));
@@ -35,12 +30,16 @@ function f = WPSNR(A,B,varargin)
 		fc = varargin{1};
 	end
 	ew = filter2(fc, e);		% filtering error with CSF
-	
+	if A == B
+   %	error('Images are identical: PSNR has infinite value')
+   decibels=9999999;
+    else
 	decibels = 20*log10(1/(sqrt(mean(mean(ew.^2)))));
+    end;
 %	disp(sprintf('WPSNR = +%5.2f dB',decibels))
 	f=decibels;
+end
 
-%=============
 function fc = csf()
 %=============
 % Program to compute CSF
@@ -64,7 +63,7 @@ function fc = csf()
 	% compute 2-D filter coefficient using FSAMP2
 	fc = fsamp2(Fmat);   
 	%mesh(fc)
-
+end
 
 %========================
 function Sa = csffun(u,v)
@@ -101,8 +100,8 @@ function Sa = csffun(u,v)
 	% Compute final response
 	Sa = Sw * Ow;
 
+end
 
-%===================
 function Fmat = csfmat()
 %===================
 % Compute CSF frequency response matrix
@@ -125,4 +124,6 @@ function Fmat = csfmat()
 		end
 	end
 	Fmat = Z;
+
+end
 
